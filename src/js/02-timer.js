@@ -8,7 +8,9 @@ let datePicked;
 
 flatpickr(input, {
   enableTime: true,
-  dateFormat: 'Y-m-d H:i',
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
       start.disabled = true;
@@ -30,23 +32,27 @@ const timerRefs = {
 };
 
 function startTimer(targetDate) {
+  let checkTimer = true;
   function updateTimer() {
     const now = new Date().getTime();
     const timeRemaining = targetDate - now;
+    if (timeRemaining < 1) {
+      return;
+    } else {
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-    timerRefs.d.textContent = padZero(days);
-    timerRefs.h.textContent = padZero(hours);
-    timerRefs.m.textContent = padZero(minutes);
-    timerRefs.s.textContent = padZero(seconds);
+      timerRefs.d.textContent = padZero(days);
+      timerRefs.h.textContent = padZero(hours);
+      timerRefs.m.textContent = padZero(minutes);
+      timerRefs.s.textContent = padZero(seconds);
+    }
   }
 
   function padZero(value) {
