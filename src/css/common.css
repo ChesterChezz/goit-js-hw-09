@@ -31,11 +31,6 @@ button {
   margin-top: 20px;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-}
-
 .value {
   text-align: center;
   line-height: 1.2;
@@ -43,6 +38,10 @@ button {
   font-weight: 400;
 }
 
+.field {
+  display: flex;
+  flex-direction: column;
+}
 .label {
   text-transform: uppercase;
   text-align: center;
